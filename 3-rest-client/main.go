@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
@@ -13,8 +14,14 @@ func main() {
 	respvar, err := http.Get("http://www.omdbapi.com/?i=tt0372784&plot=short&r=json")
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("error:", err)
 	}
 
-	fmt.Printf("output: %v\ntime: %v\n", respvar, timenow)
+	respvarjson, err := json.Marshal(respvar)
+
+	if err != nil {
+		fmt.Println("error:", err)
+	}
+
+	fmt.Printf("json output: %v\ntime: %v\n", respvarjson, timenow)
 }
