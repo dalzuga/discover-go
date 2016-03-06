@@ -16,10 +16,21 @@ func (d *user) printhello() {
 	fmt.Printf("Hello %s\n", d.Name)
 }
 
-func (d *user) printitall() {
+func (d *user) printitall() error {
 	//	d.Name = "dsfs"
 
-	fmt.Printf("%s who was born in %s would be %s\n", d.Name, d.City, d.DOB)
+	// fmt.Printf("%s who was born in %s would be %s\n", d.Name, d.City, d.DOB)
+
+	layout := "January 2, 2006"
+
+	DOB, err := time.Parse(layout, value)
+
+	if err != nil {
+		fmt.Println("error:", err)
+		return err
+	}
+
+	return nil
 }
 
 func main() {
@@ -32,11 +43,21 @@ func main() {
 	u := user{Name: "Betty Holberton", DOB: "March 7, 1917", City: "Philadelphia"}
 
 	value := u.DOB
-	layout := "01 07, 06"
+	layout := "January 2, 2006"
 
-	DOB, _ := time.Parse(layout, value)
+	DOB, err := time.Parse(layout, value)
+
+	if err != nil {
+		fmt.Println("error:", err)
+		return
+	}
+
 	fmt.Printf("%s\n", u.DOB)
 	fmt.Printf("%s\n", DOB)
+
+	age := time.Since(DOB).Hours() / 8760
+
+	fmt.Println(int(age))
 
 	u.printhello()
 	//	fmt.Println(u.Name)
