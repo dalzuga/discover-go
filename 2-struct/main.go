@@ -11,16 +11,17 @@ type user struct {
 	City string `json:"city"`
 }
 
-func (d *user) printhello() {
+func (u *user) printhello() {
 	//	d.Name = "dsfs"
-	fmt.Printf("Hello %s\n", d.Name)
+	fmt.Printf("Hello %s\n", u.Name)
 }
 
-func (d *user) printitall() error {
+func (u *user) printitall() error {
 	//	d.Name = "dsfs"
 
 	// fmt.Printf("%s who was born in %s would be %s\n", d.Name, d.City, d.DOB)
 
+	value := u.DOB
 	layout := "January 2, 2006"
 
 	DOB, err := time.Parse(layout, value)
@@ -29,6 +30,11 @@ func (d *user) printitall() error {
 		fmt.Println("error:", err)
 		return err
 	}
+
+	age := time.Since(DOB).Hours() / 8760
+
+	fmt.Println(int(age))
+	fmt.Printf("%s who was born in %s would be %d years old today.\n", u.Name, u.City, int(age))
 
 	return nil
 }
@@ -42,22 +48,7 @@ func main() {
 
 	u := user{Name: "Betty Holberton", DOB: "March 7, 1917", City: "Philadelphia"}
 
-	value := u.DOB
-	layout := "January 2, 2006"
-
-	DOB, err := time.Parse(layout, value)
-
-	if err != nil {
-		fmt.Println("error:", err)
-		return
-	}
-
-	fmt.Printf("%s\n", u.DOB)
-	fmt.Printf("%s\n", DOB)
-
-	age := time.Since(DOB).Hours() / 8760
-
-	fmt.Println(int(age))
+	//fmt.Printf("%s\n", u.DOB)
 
 	u.printhello()
 	//	fmt.Println(u.Name)
